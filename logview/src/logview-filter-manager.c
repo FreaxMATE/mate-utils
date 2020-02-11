@@ -156,13 +156,6 @@ check_regex (LogviewFilterManager *manager, const gchar *regex)
 }
 
 static void
-on_check_toggled (GtkToggleButton *button, GtkWidget *widget)
-{
-  gtk_widget_set_sensitive (widget,
-                            gtk_toggle_button_get_active (button));
-}
-
-static void
 on_dialog_add_edit_reponse (GtkWidget *dialog, int response_id,
                             LogviewFilterManager *manager)
 {
@@ -207,24 +200,6 @@ on_dialog_add_edit_reponse (GtkWidget *dialog, int response_id,
     tag = gtk_text_tag_new (name);
 
     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_color))) {
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_foreground))) {
-        GdkRGBA foreground_color;
-        gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (color_foreground),
-                                    &foreground_color);
-        g_object_set (G_OBJECT (tag),
-                      "foreground-rgba", &foreground_color,
-                      "foreground-set", TRUE, NULL);
-      }
-
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_background))) {
-        GdkRGBA background_color;
-        gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (color_background),
-                                    &background_color);
-        g_object_set (tag,
-                      "paragraph-background-rgba", &background_color,
-                      "paragraph-background-set", TRUE, NULL);
-      }
-
       if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_foreground))
           && !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_background))) {
           GtkWidget *error_dialog;
@@ -242,6 +217,19 @@ on_dialog_add_edit_reponse (GtkWidget *dialog, int response_id,
 
           return;
       }
+
+      GdkRGBA foreground_color, background_color;
+
+      gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (color_foreground), &foreground_color);
+      g_object_set (G_OBJECT (tag),
+                    "foreground-rgba", &foreground_color,
+                    "foreground-set", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_foreground)),
+                    NULL);
+      gtk_color_chooser_get_rgba (GTK_COLOR_CHOOSER (color_background), &background_color);
+      g_object_set (tag,
+                    "paragraph-background-rgba", &background_color,
+                    "paragraph-background-set", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_background)),
+                    NULL);
     } else { /* !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio_color)) */
       g_object_set (tag, "invisible", TRUE, NULL);
     }
@@ -270,7 +258,7 @@ run_add_edit_dialog (LogviewFilterManager *manager, LogviewFilter *filter)
   const gchar *title;
   GtkWidget *dialog, *entry_name, *entry_regex, *radio_color;
   GtkWidget *radio_visible, *check_foreground, *check_background;
-  GtkWidget *color_foreground, *color_background, *vbox_color;
+  GtkWidget *color_foreground, *color_background;
   gboolean foreground_set, background_set, invisible;
   GtkTextTag *tag;
   GtkBuilder* builder;
@@ -301,10 +289,6 @@ run_add_edit_dialog (LogviewFilterManager *manager, LogviewFilter *filter)
                                                     "radio_color"));
   radio_visible = GTK_WIDGET (gtk_builder_get_object (builder,
                                                       "radio_visible"));
-
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (radio_color),
-                              gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_visible)));
-
   check_foreground = GTK_WIDGET (gtk_builder_get_object (builder,
                                                          "check_foreground"));
   check_background = GTK_WIDGET (gtk_builder_get_object (builder,
@@ -313,58 +297,42 @@ run_add_edit_dialog (LogviewFilterManager *manager, LogviewFilter *filter)
                                                          "color_foreground"));
   color_background = GTK_WIDGET (gtk_builder_get_object (builder,
                                                          "color_background"));
-  g_signal_connect (check_foreground, "toggled", G_CALLBACK (on_check_toggled),
-                    color_foreground);
-  g_signal_connect (check_background, "toggled", G_CALLBACK (on_check_toggled),
-                    color_background);
-
-  on_check_toggled (GTK_TOGGLE_BUTTON (check_foreground),
-                    color_foreground);
-  on_check_toggled (GTK_TOGGLE_BUTTON (check_background),
-                    color_background);
-
-  vbox_color = GTK_WIDGET (gtk_builder_get_object (builder, "vbox_color"));
-  g_signal_connect (radio_color, "toggled", G_CALLBACK (on_check_toggled),
-                    vbox_color);
-  on_check_toggled (GTK_TOGGLE_BUTTON (radio_color),
-                    vbox_color);
 
   if (filter) {
+    GdkRGBA *foreground, *background;
+
     g_object_get (filter,
                   "name", &name,
                   "regex", &regex,
                   "texttag", &tag,
                   NULL);
+
     g_object_get (tag,
                   "foreground-set", &foreground_set,
                   "paragraph-background-set", &background_set,
-                  "invisible", &invisible, NULL);
+                  "invisible", &invisible,
+                  NULL);
+
     gtk_entry_set_text (GTK_ENTRY(entry_name), name);
     gtk_entry_set_text (GTK_ENTRY(entry_regex), regex);
 
     if (foreground_set) {
-      GdkRGBA *foreground;
-
       g_object_get (tag, "foreground-rgba", &foreground, NULL);
       gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (color_foreground),
                                   foreground);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_foreground),
-                                    TRUE);
-
       gdk_rgba_free (foreground);
     }
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_foreground),
+                                  foreground_set);
 
     if (background_set) {
-      GdkRGBA *background;
-
       g_object_get (tag, "paragraph-background-rgba", &background, NULL);
       gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (color_background),
                                   background);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_background),
-                                    TRUE);
-
       gdk_rgba_free (background);
     }
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_background),
+                                  background_set);
 
     if (background_set || foreground_set) {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_color), TRUE);
