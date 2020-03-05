@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>rootdir - scan-build results</title>
+<link type="text/css" rel="stylesheet" href="scanview.css"/>
+<script src="sorttable.js"></script>
+<script language='javascript' type="text/javascript">
+function SetDisplay(RowClass, DisplayVal)
+{
+  var Rows = document.getElementsByTagName("tr");
+  for ( var i = 0 ; i < Rows.length; ++i ) {
+    if (Rows[i].className == RowClass) {
+      Rows[i].style.display = DisplayVal;
+    }
+  }
+}
+
+function CopyCheckedStateToCheckButtons(SummaryCheckButton) {
+  var Inputs = document.getElementsByTagName("input");
+  for ( var i = 0 ; i < Inputs.length; ++i ) {
+    if (Inputs[i].type == "checkbox") {
+      if(Inputs[i] != SummaryCheckButton) {
+        Inputs[i].checked = SummaryCheckButton.checked;
+        Inputs[i].onclick();
+      }
+    }
+  }
+}
+
+function returnObjById( id ) {
+    if (document.getElementById)
+        var returnVar = document.getElementById(id);
+    else if (document.all)
+        var returnVar = document.all[id];
+    else if (document.layers)
+        var returnVar = document.layers[id];
+    return returnVar;
+}
+
+var NumUnchecked = 0;
+
+function ToggleDisplay(CheckButton, ClassName) {
+  if (CheckButton.checked) {
+    SetDisplay(ClassName, "");
+    if (--NumUnchecked == 0) {
+      returnObjById("AllBugsCheck").checked = true;
+    }
+  }
+  else {
+    SetDisplay(ClassName, "none");
+    NumUnchecked++;
+    returnObjById("AllBugsCheck").checked = false;
+  }
+}
+</script>
+<!-- SUMMARYENDHEAD -->
+</head>
+<body>
+<h1>rootdir - scan-build results</h1>
+
+<table>
+<tr><th>User:</th><td>root@9ebb8d980d78</td></tr>
+<tr><th>Working Directory:</th><td>/rootdir</td></tr>
+<tr><th>Command Line:</th><td>make -j 2</td></tr>
+<tr><th>Clang Version:</th><td>clang version 9.0.1 (Fedora 9.0.1-2.fc31)
+</td></tr>
+<tr><th>Date:</th><td>Thu Mar  5 10:47:49 2020</td></tr>
+</table>
+<h2>Bug Summary</h2><table>
+<thead><tr><td>Bug Type</td><td>Quantity</td><td class="sorttable_nosort">Display?</td></tr></thead>
+<tr style="font-weight:bold"><td class="SUMM_DESC">All Bugs</td><td class="Q">41</td><td><center><input type="checkbox" id="AllBugsCheck" onClick="CopyCheckedStateToCheckButtons(this);" checked/></center></td></tr>
+<tr><th>API</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Argument with 'nonnull' attribute passed null</td><td class="Q">2</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_api_argument_with_nonnull_attribute_passed_null');" checked/></center></td></tr>
+<tr><th>Dead code</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Unreachable code</td><td class="Q">13</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_dead_code_unreachable_code');" checked/></center></td></tr>
+<tr><th>Dead store</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Dead increment</td><td class="Q">6</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_dead_store_dead_increment');" checked/></center></td></tr>
+<tr><th>Logic error</th><th colspan=2></th></tr>
+<tr><td class="SUMM_DESC">Cast from non-struct type to struct type</td><td class="Q">4</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_cast_from_non-struct_type_to_struct_type');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Dereference of null pointer</td><td class="Q">10</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_dereference_of_null_pointer');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Out-of-bound access</td><td class="Q">3</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_out-of-bound_access');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Result of operation is garbage or undefined</td><td class="Q">2</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_result_of_operation_is_garbage_or_undefined');" checked/></center></td></tr>
+<tr><td class="SUMM_DESC">Uninitialized argument value</td><td class="Q">1</td><td><center><input type="checkbox" onClick="ToggleDisplay(this,'bt_logic_error_uninitialized_argument_value');" checked/></center></td></tr>
+</table>
+<h2>Reports</h2>
+
+<table class="sortable" style="table-layout:automatic">
+<thead><tr>
+  <td>Bug Group</td>
+  <td class="sorttable_sorted">Bug Type<span id="sorttable_sortfwdind">&nbsp;&#x25BE;</span></td>
+  <td>File</td>
+  <td>Function/Method</td>
+  <td class="Q">Line</td>
+  <td class="Q">Path Length</td>
+  <td class="sorttable_nosort"></td>
+  <!-- REPORTBUGCOL -->
+</tr></thead>
+<tbody>
+<tr class="bt_api_argument_with_nonnull_attribute_passed_null"><td class="DESC">API</td><td class="DESC">Argument with 'nonnull' attribute passed null</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1489</td><td class="Q">18</td><td><a href="report-6b6468.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-6b6468.html" -->
+</tr>
+<tr class="bt_api_argument_with_nonnull_attribute_passed_null"><td class="DESC">API</td><td class="DESC">Argument with 'nonnull' attribute passed null</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1489</td><td class="Q">18</td><td><a href="report-497f8f.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-497f8f.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>gsearchtool/libeggsmclient/eggsmclient-xsmp.c</td><td class="DESC">array_prop</td><td class="Q">1154</td><td class="Q">1</td><td><a href="report-070272.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-070272.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>gsearchtool/libeggsmclient/eggsmclient-xsmp.c</td><td class="DESC">ptrarray_prop</td><td class="Q">1187</td><td class="Q">1</td><td><a href="report-c3fdea.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c3fdea.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>gsearchtool/libeggsmclient/eggsmclient-xsmp.c</td><td class="DESC">array_prop</td><td class="Q">1154</td><td class="Q">1</td><td><a href="report-2ab880.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-2ab880.html" -->
+</tr>
+<tr class="bt_logic_error_cast_from_non-struct_type_to_struct_type"><td class="DESC">Logic error</td><td class="DESC">Cast from non-struct type to struct type</td><td>gsearchtool/libeggsmclient/eggsmclient-xsmp.c</td><td class="DESC">ptrarray_prop</td><td class="Q">1187</td><td class="Q">1</td><td><a href="report-5b9799.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5b9799.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1387</td><td class="Q">1</td><td><a href="report-3d2550.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-3d2550.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1597</td><td class="Q">1</td><td><a href="report-5b7caf.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5b7caf.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1597</td><td class="Q">1</td><td><a href="report-c612a7.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c612a7.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1387</td><td class="Q">1</td><td><a href="report-44174c.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-44174c.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1437</td><td class="Q">1</td><td><a href="report-a1618d.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-a1618d.html" -->
+</tr>
+<tr class="bt_dead_store_dead_increment"><td class="DESC">Dead store</td><td class="DESC">Dead increment</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1437</td><td class="Q">1</td><td><a href="report-f5de04.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-f5de04.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1458</td><td class="Q">23</td><td><a href="report-19d4f3.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-19d4f3.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1411</td><td class="Q">23</td><td><a href="report-8bcef7.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-8bcef7.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1618</td><td class="Q">23</td><td><a href="report-1a3897.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-1a3897.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1512</td><td class="Q">22</td><td><a href="report-2e3ec2.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-2e3ec2.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1512</td><td class="Q">22</td><td><a href="report-a90c85.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-a90c85.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1523</td><td class="Q">26</td><td><a href="report-c8f415.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c8f415.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1618</td><td class="Q">23</td><td><a href="report-00d827.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-00d827.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1523</td><td class="Q">26</td><td><a href="report-6a48da.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-6a48da.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1411</td><td class="Q">23</td><td><a href="report-112e5c.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-112e5c.html" -->
+</tr>
+<tr class="bt_logic_error_dereference_of_null_pointer"><td class="DESC">Logic error</td><td class="DESC">Dereference of null pointer</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1458</td><td class="Q">23</td><td><a href="report-8aca10.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-8aca10.html" -->
+</tr>
+<tr class="bt_logic_error_out-of-bound_access"><td class="DESC">Logic error</td><td class="DESC">Out-of-bound access</td><td>mate-dictionary/libgdict/gdict-defbox.c</td><td class="DESC">breakup_string</td><td class="Q">863</td><td class="Q">25</td><td><a href="report-7decce.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-7decce.html" -->
+</tr>
+<tr class="bt_logic_error_out-of-bound_access"><td class="DESC">Logic error</td><td class="DESC">Out-of-bound access</td><td>mate-dictionary/libgdict/gdict-defbox.c</td><td class="DESC">breakup_string</td><td class="Q">863</td><td class="Q">25</td><td><a href="report-cc84e4.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-cc84e4.html" -->
+</tr>
+<tr class="bt_logic_error_out-of-bound_access"><td class="DESC">Logic error</td><td class="DESC">Out-of-bound access</td><td>mate-screenshot/src/mate-screenshot.c</td><td class="DESC">build_uri</td><td class="Q">926</td><td class="Q">25</td><td><a href="report-002b69.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-002b69.html" -->
+</tr>
+<tr class="bt_logic_error_result_of_operation_is_garbage_or_undefined"><td class="DESC">Logic error</td><td class="DESC">Result of operation is garbage or undefined</td><td>mate-dictionary/libgdict/gdict-defbox.c</td><td class="DESC">lines_match</td><td class="Q">627</td><td class="Q">28</td><td><a href="report-1f8385.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-1f8385.html" -->
+</tr>
+<tr class="bt_logic_error_result_of_operation_is_garbage_or_undefined"><td class="DESC">Logic error</td><td class="DESC">Result of operation is garbage or undefined</td><td>mate-dictionary/libgdict/gdict-defbox.c</td><td class="DESC">lines_match</td><td class="Q">627</td><td class="Q">28</td><td><a href="report-c9c5cc.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c9c5cc.html" -->
+</tr>
+<tr class="bt_logic_error_uninitialized_argument_value"><td class="DESC">Logic error</td><td class="DESC">Uninitialized argument value</td><td>baobab/src/baobab.c</td><td class="DESC">push_iter_in_stack</td><td class="Q">501</td><td class="Q">15</td><td><a href="report-c27773.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-c27773.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1405</td><td class="Q">1</td><td><a href="report-96eb1e.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-96eb1e.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_finalize</td><td class="Q">475</td><td class="Q">1</td><td><a href="report-8a5588.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-8a5588.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1527</td><td class="Q">1</td><td><a href="report-42f26e.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-42f26e.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1612</td><td class="Q">1</td><td><a href="report-b49c11.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-b49c11.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1527</td><td class="Q">1</td><td><a href="report-f64b06.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-f64b06.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1517</td><td class="Q">1</td><td><a href="report-926f4f.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-926f4f.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1612</td><td class="Q">1</td><td><a href="report-ac5ea1.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-ac5ea1.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_finalize</td><td class="Q">475</td><td class="Q">1</td><td><a href="report-cd3a65.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-cd3a65.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1452</td><td class="Q">1</td><td><a href="report-408960.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-408960.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1452</td><td class="Q">1</td><td><a href="report-0c1367.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-0c1367.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1405</td><td class="Q">1</td><td><a href="report-a4be8a.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-a4be8a.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>baobab/src/baobab.c</td><td class="DESC">show_version</td><td class="Q">1218</td><td class="Q">1</td><td><a href="report-b258c8.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-b258c8.html" -->
+</tr>
+<tr class="bt_dead_code_unreachable_code"><td class="DESC">Dead code</td><td class="DESC">Unreachable code</td><td>mate-dictionary/libgdict/gdict-client-context.c</td><td class="DESC">gdict_client_context_parse_line</td><td class="Q">1517</td><td class="Q">1</td><td><a href="report-5b82a8.html#EndPath">View Report</a></td>
+<!-- REPORTBUG id="report-5b82a8.html" -->
+</tr>
+</tbody>
+</table>
+
+</body></html>
